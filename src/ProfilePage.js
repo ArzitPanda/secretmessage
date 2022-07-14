@@ -1,21 +1,25 @@
 
 
 
-import { useParams } from 'react-router-dom';
+import { useParams ,useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react'
 import {getDoc,doc,updateDoc, arrayUnion} from 'firebase/firestore'
 import { db } from './firebase';
 import Logo from './Logo';
 
 function ProfilePage() {
-    
+    const navigation=useNavigate();
     let { userId } = useParams();
     const [user,setUser]=useState(userId);
         const[hello,setHello]=useState({})
 
 useEffect(  () => {
- 
+            
+if(localStorage.getItem("admin") && userId===localStorage.getItem("admin"))
+{
+return navigation("/");
 
+}
         const fetchData=async () => {
             const data= await getDoc(doc(db,'user',user));
             console.log(data.data());
@@ -43,6 +47,7 @@ try {
     })
     console.log("sucessfully");
     setText("");
+    navigation("/")
 } catch (error) {
     console.log(error);
 }
