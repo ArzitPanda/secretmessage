@@ -2,6 +2,7 @@ import React,{useEffect} from 'react'
 import {db} from  './firebase'
 import { collection, addDoc, doc, getDoc } from "firebase/firestore"; 
 import { useState } from 'react';
+import {RiWhatsappFill} from 'react-icons/ri'
 
 const Navbar = () => {
 
@@ -11,19 +12,27 @@ const [admin,setAdmin]=useState({msg:[]});
 
 // var m={msg:[]};
 
-const fetchData=async () => {
+const fetchData1=async () => {
     const data= await getDoc(doc(db,'user',localStorage.getItem('admin')));
     // console.log(data.data());
   const data2=data.data();
         
         setAdmin(data2);
         console.log(admin)
-return admin;
+
 }
 
 useEffect(  () => {
 
-
+    const fetchData=async () => {
+        const data= await getDoc(doc(db,'user',localStorage.getItem('admin')));
+        // console.log(data.data());
+      const data2=data.data();
+            
+            setAdmin(data2);
+            console.log(admin)
+  
+    }
     
 
 fetchData();
@@ -86,7 +95,8 @@ const storeUserInfo= async ()=>{
             <button  onClick={storeUserInfo} className="bg-yellow-400 text-black font-semibold shadow-xl px-5 py-2 rounded-md">lets start</button>
                 
                 </div>}
-            {localStorage.getItem("admin") && <div className="flex flex-col items-center justify-center ">
+            {localStorage.getItem("admin") &&
+             <div className="flex flex-col items-center justify-center ">
                 
 
 
@@ -94,15 +104,24 @@ const storeUserInfo= async ()=>{
                 <div>{localStorage.getItem("admin")}</div>
 
                 <input type="text" value={window.location.origin+"/users/"+localStorage.getItem("admin")}  className="w-80 p-5 text-black text-xs"/>
-                
-                
+                  
+                  
+                 
+                 
                 </div>}
                 
 
-       
+                    <div>
+
+                        <a href={`whatsapp://send?text=${window.location.origin+"/users/"+localStorage.getItem("admin")}`}  className="flex flex-row items-center justify-around bg-gray-800 px-5 py-2 mt-2 shadow-xl rounded-lg"  target="_blank">
+                            <RiWhatsappFill color="white" size={25}/>
+                            <h2>share to whatsapp</h2>
+                        </a>
+
+                    </div>
                 <div className="flex flex-col items-center justify-center w-3/5 mx-auto">
                     {admin.msg.map((val,index)=>(<div className=" bg-slate-600 p-5 my-5 shadow-2xl rounded-xl" key={index}>{val}</div>))}
-                    {localStorage.getItem("admin") &&  <button onClick={fetchData} className="bg-yellow-400 text-black font-semibold shadow-xl px-5 py-2 rounded-md">refresh</button>}
+                    {localStorage.getItem("admin") &&  <button onClick={fetchData1} className="bg-yellow-400 text-black font-semibold shadow-xl px-5 py-2 rounded-md">refresh</button>}
                 </div>
 
 
