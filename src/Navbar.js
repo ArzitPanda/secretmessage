@@ -4,7 +4,7 @@ import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { useState } from 'react';
 import {RiWhatsappFill} from 'react-icons/ri'
 import Logo from './Logo';
-import {BiCopyAlt} from 'react-icons/bi'
+
 const Navbar = () => {
 
 const[name,setName]=useState("");
@@ -89,7 +89,7 @@ const storeUserInfo= async ()=>{
 
 
   return (
-    <div className="w-screen h-max text-slate-100 bg-slate-700 flex items-center justify-center flex-col ">
+    <div className="w-screen h-screen text-slate-100 bg-slate-700 flex items-center justify-center flex-col ">
                 <div className="h-1/5 flex items-center justify-center mb-20 pr-5">
                 <Logo/>
                 </div>
@@ -106,16 +106,9 @@ const storeUserInfo= async ()=>{
 
                 <div >your id is</div>
                 <div>{localStorage.getItem("admin")}</div>
-                    <div className="flex flex-col items-center justify-center gap-y-6">
 
                 <input type="text" value={window.location.origin+"/users/"+localStorage.getItem("admin")}  className="w-80 p-5 text-black text-xs"/>
-
-                  <BiCopyAlt size={25} onClick={()=>{
-                        navigator.clipboard.writeText(window.location.origin+"/users/"+localStorage.getItem("admin"));
-                        
-
-                  }}/>
-                    </div>
+                  
                   
                  
                  
@@ -131,8 +124,8 @@ const storeUserInfo= async ()=>{
 
                     </div>
                 <div className="flex flex-col items-center justify-center w-3/5 mx-auto">
-                    {localStorage.getItem("admin") &&  <button onClick={fetchData1} className="bg-yellow-400 text-black font-semibold shadow-xl px-5 py-2 rounded-md">refresh</button>}
                     {admin.msg.map((val,index)=>(<div className=" bg-slate-600 p-5 my-5 shadow-2xl rounded-xl" key={index}>{val}</div>))}
+                    {localStorage.getItem("admin") &&  <button onClick={fetchData1} className="bg-yellow-400 text-black font-semibold shadow-xl px-5 py-2 rounded-md">refresh</button>}
                 </div>
 
 
